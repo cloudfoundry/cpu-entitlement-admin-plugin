@@ -13,6 +13,7 @@ func NewRenderer(ui terminal.UI) *Renderer {
 	return &Renderer{}
 }
 
-func (r *Renderer) Render(report reporter.Report) {
-	fmt.Printf("InstanceIDs = %+v\n", report.InstanceIDs)
+func (r *Renderer) Render(report reporter.Report) error {
+	fmt.Printf("Report = %+v\n", report)
+	return nil
 }

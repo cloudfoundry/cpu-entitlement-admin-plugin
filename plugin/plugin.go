@@ -1,13 +1,19 @@
 package plugin // import "code.cloudfoundry.org/cpu-entitlement-admin-plugin/plugin"
 
 import (
+	"errors"
+	"net/http"
+	"net/url"
 	"os"
+	"regexp"
 
 	"code.cloudfoundry.org/cli/cf/terminal"
 	"code.cloudfoundry.org/cli/cf/trace"
 	"code.cloudfoundry.org/cli/plugin"
 	"code.cloudfoundry.org/cpu-entitlement-admin-plugin/output"
 	"code.cloudfoundry.org/cpu-entitlement-admin-plugin/reporter"
+	"code.cloudfoundry.org/cpu-entitlement-plugin/token"
+	logcache "code.cloudfoundry.org/log-cache/pkg/client"
 )
 
 type CPUEntitlementAdminPlugin struct{}
@@ -24,11 +30,22 @@ func (p CPUEntitlementAdminPlugin) Run(cli plugin.CliConnection, args []string) 
 	traceLogger := trace.NewLogger(os.Stdout, true, os.Getenv("CF_TRACE"), "")
 	ui := terminal.NewUI(os.Stdin, os.Stdout, terminal.NewTeePrinter(os.Stdout), traceLogger)
 
-	reporter := reporter.New(cli)
+	logCacheURL, err := getLogCacheURL(cli)
+	if err != nil {
+		ui.Failed(err.Error())
+		os.Exit(1)
+	}
+
+	logCacheClient := logcache.NewClient(
+		logCacheURL,
+		logcache.WithHTTPClient(authenticatedBy(token.NewGetter(cli.AccessToken))),
+	)
+
+	reporter := reporter.New(cli, logCacheClient)
 	renderer := output.NewRenderer(ui)
 	runner := NewRunner(reporter, renderer)
 
-	err := runner.Run()
+	err = runner.Run()
 	if err != nil {
 		ui.Failed(err.Error())
 		os.Exit(1)
@@ -54,4 +71,53 @@ func (p CPUEntitlementAdminPlugin) GetMetadata() plugin.PluginMetadata {
 			},
 		},
 	}
+}
+
+func getLogCacheURL(cli plugin.CliConnection) (string, error) {
+	dopplerURL, err := cli.DopplerEndpoint()
+	if err != nil {
+		return "", err
+	}
+
+	return buildLogCacheURL(dopplerURL)
+}
+
+func buildLogCacheURL(dopplerURL string) (string, error) {
+	logStreamURL, err := url.Parse(dopplerURL)
+	if err != nil {
+		return "", err
+	}
+
+	regex, err := regexp.Compile("doppler(\\S+):443")
+	if err != nil {
+		return "", err
+	}
+
+	match := regex.FindStringSubmatch(logStreamURL.Host)
+
+	if len(match) != 2 {
+		return "", errors.New("Unable to parse log-stream endpoint from doppler URL")
+	}
+
+	logStreamURL.Scheme = "http"
+	logStreamURL.Host = "log-cache" + match[1]
+
+	return logStreamURL.String(), nil
+}
+
+func authenticatedBy(tokenGetter *token.Getter) *authClient {
+	return &authClient{tokenGetter: tokenGetter}
+}
+
+type authClient struct {
+	tokenGetter *token.Getter
+}
+
+func (a *authClient) Do(req *http.Request) (*http.Response, error) {
+	t, err := a.tokenGetter.Token()
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Authorization", t)
+	return http.DefaultClient.Do(req)
 }

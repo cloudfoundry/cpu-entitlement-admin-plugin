@@ -7,7 +7,7 @@ type Reporter interface {
 }
 
 type Renderer interface {
-	Render(reporter.Report)
+	Render(reporter.Report) error
 }
 
 type Runner struct {
@@ -23,8 +23,10 @@ func NewRunner(reporter Reporter, renderer Renderer) *Runner {
 }
 
 func (r *Runner) Run() error {
-	report, _ := r.reporter.OverEntitlementInstances()
+	report, err := r.reporter.OverEntitlementInstances()
+	if err != nil {
+		return err
+	}
 
-	r.renderer.Render(report)
-	return nil
+	return r.renderer.Render(report)
 }
