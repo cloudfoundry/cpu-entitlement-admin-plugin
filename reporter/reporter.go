@@ -7,6 +7,7 @@ import (
 	"code.cloudfoundry.org/cli/plugin"
 	plugin_models "code.cloudfoundry.org/cli/plugin/models"
 	logcache "code.cloudfoundry.org/log-cache/pkg/client"
+	"code.cloudfoundry.org/log-cache/pkg/rpc/logcache_v1"
 )
 
 type Report struct {
@@ -18,12 +19,18 @@ type SpaceReport struct {
 	Apps      []string
 }
 
-type Reporter struct {
-	cli            plugin.CliConnection
-	logCacheClient *logcache.Client
+//go:generate counterfeiter . LogCacheClient
+
+type LogCacheClient interface {
+	PromQL(ctx context.Context, query string, opts ...logcache.PromQLOption) (*logcache_v1.PromQL_InstantQueryResult, error)
 }
 
-func New(cli plugin.CliConnection, logCacheClient *logcache.Client) Reporter {
+type Reporter struct {
+	cli            plugin.CliConnection
+	logCacheClient LogCacheClient
+}
+
+func New(cli plugin.CliConnection, logCacheClient LogCacheClient) Reporter {
 	return Reporter{
 		cli:            cli,
 		logCacheClient: logCacheClient,
@@ -40,9 +47,13 @@ func (r Reporter) OverEntitlementInstances() (Report, error) {
 			return Report{}, err
 		}
 
-		apps, err := r.getApps(spaceModel)
+		apps, err := r.filterApps(spaceModel.Applications)
 		if err != nil {
 			return Report{}, err
+		}
+
+		if len(apps) == 0 {
+			continue
 		}
 
 		spaceReports = append(spaceReports, SpaceReport{SpaceName: space.Name, Apps: apps})
@@ -51,9 +62,9 @@ func (r Reporter) OverEntitlementInstances() (Report, error) {
 	return Report{SpaceReports: spaceReports}, nil
 }
 
-func (r Reporter) getApps(spaceModel plugin_models.GetSpace_Model) ([]string, error) {
+func (r Reporter) filterApps(spaceApps []plugin_models.GetSpace_Apps) ([]string, error) {
 	apps := []string{}
-	for _, app := range spaceModel.Applications {
+	for _, app := range spaceApps {
 		isOverEntitlement, err := r.isOverEntitlement(app.Guid)
 		if err != nil {
 			return nil, err
