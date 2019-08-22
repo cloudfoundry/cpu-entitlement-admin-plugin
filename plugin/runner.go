@@ -2,9 +2,13 @@ package plugin
 
 import "code.cloudfoundry.org/cpu-entitlement-admin-plugin/reporter"
 
+//go:generate counterfeiter . Reporter
+
 type Reporter interface {
 	OverEntitlementInstances() (reporter.Report, error)
 }
+
+//go:generate counterfeiter . Renderer
 
 type Renderer interface {
 	Render(reporter.Report) error
