@@ -11,7 +11,7 @@ build:
 	go build -mod vendor
 
 test:
-	ginkgo -r --race
+	ginkgo -r --race --skipPackage=e2e
 
 install: build
 	cf uninstall-plugin CPUEntitlementAdminPlugin || true
