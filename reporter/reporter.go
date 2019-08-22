@@ -1,15 +1,5 @@
 package reporter // import "code.cloudfoundry.org/cpu-entitlement-admin-plugin/reporter"
 
-import (
-	"context"
-	"fmt"
-
-	"code.cloudfoundry.org/cli/plugin"
-	plugin_models "code.cloudfoundry.org/cli/plugin/models"
-	logcache "code.cloudfoundry.org/log-cache/pkg/client"
-	"code.cloudfoundry.org/log-cache/pkg/rpc/logcache_v1"
-)
-
 type Report struct {
 	SpaceReports []SpaceReport
 }
@@ -19,35 +9,50 @@ type SpaceReport struct {
 	Apps      []string
 }
 
-//go:generate counterfeiter . LogCacheClient
+//go:generate counterfeiter . MetricsFetcher
 
-type LogCacheClient interface {
-	PromQL(ctx context.Context, query string, opts ...logcache.PromQLOption) (*logcache_v1.PromQL_InstantQueryResult, error)
+type MetricsFetcher interface {
+	FetchInstanceEntitlementUsages(appGuid string) ([]float64, error)
+}
+
+//go:generate counterfeiter . CloudFoundryClient
+
+type CloudFoundryClient interface {
+	GetSpaces() ([]Space, error)
+}
+
+type Space struct {
+	Name         string
+	Applications []Application
+}
+
+type Application struct {
+	Name string
+	Guid string
 }
 
 type Reporter struct {
-	cli            plugin.CliConnection
-	logCacheClient LogCacheClient
+	cf             CloudFoundryClient
+	metricsFetcher MetricsFetcher
 }
 
-func New(cli plugin.CliConnection, logCacheClient LogCacheClient) Reporter {
+func New(cf CloudFoundryClient, metricsFetcher MetricsFetcher) Reporter {
 	return Reporter{
-		cli:            cli,
-		logCacheClient: logCacheClient,
+		cf:             cf,
+		metricsFetcher: metricsFetcher,
 	}
 }
 
 func (r Reporter) OverEntitlementInstances() (Report, error) {
 	spaceReports := []SpaceReport{}
 
-	spaces, _ := r.cli.GetSpaces()
-	for _, space := range spaces {
-		spaceModel, err := r.cli.GetSpace(space.Name)
-		if err != nil {
-			return Report{}, err
-		}
+	spaces, err := r.cf.GetSpaces()
+	if err != nil {
+		return Report{}, err
+	}
 
-		apps, err := r.filterApps(spaceModel.Applications)
+	for _, space := range spaces {
+		apps, err := r.filterApps(space.Applications)
 		if err != nil {
 			return Report{}, err
 		}
@@ -62,7 +67,7 @@ func (r Reporter) OverEntitlementInstances() (Report, error) {
 	return Report{SpaceReports: spaceReports}, nil
 }
 
-func (r Reporter) filterApps(spaceApps []plugin_models.GetSpace_Apps) ([]string, error) {
+func (r Reporter) filterApps(spaceApps []Application) ([]string, error) {
 	apps := []string{}
 	for _, app := range spaceApps {
 		isOverEntitlement, err := r.isOverEntitlement(app.Guid)
@@ -77,14 +82,14 @@ func (r Reporter) filterApps(spaceApps []plugin_models.GetSpace_Apps) ([]string,
 }
 
 func (r Reporter) isOverEntitlement(appGuid string) (bool, error) {
-	appInstancesUsages, err := r.logCacheClient.PromQL(context.Background(), fmt.Sprintf(`absolute_usage{source_id="%s"} / absolute_entitlement{source_id="%s"}`, appGuid, appGuid))
+	appInstancesUsages, err := r.metricsFetcher.FetchInstanceEntitlementUsages(appGuid)
 	if err != nil {
 		return false, err
 	}
 
 	isOverEntitlement := false
-	for _, sample := range appInstancesUsages.GetVector().GetSamples() {
-		if sample.GetPoint().GetValue() > 1 {
+	for _, usage := range appInstancesUsages {
+		if usage > 1 {
 			isOverEntitlement = true
 		}
 	}

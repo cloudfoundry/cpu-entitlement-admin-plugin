@@ -2,7 +2,6 @@ package plugin // import "code.cloudfoundry.org/cpu-entitlement-admin-plugin/plu
 
 import (
 	"errors"
-	"net/http"
 	"net/url"
 	"os"
 	"regexp"
@@ -10,10 +9,10 @@ import (
 	"code.cloudfoundry.org/cli/cf/terminal"
 	"code.cloudfoundry.org/cli/cf/trace"
 	"code.cloudfoundry.org/cli/plugin"
+	"code.cloudfoundry.org/cpu-entitlement-admin-plugin/cf"
+	"code.cloudfoundry.org/cpu-entitlement-admin-plugin/metrics"
 	"code.cloudfoundry.org/cpu-entitlement-admin-plugin/output"
 	"code.cloudfoundry.org/cpu-entitlement-admin-plugin/reporter"
-	"code.cloudfoundry.org/cpu-entitlement-plugin/token"
-	logcache "code.cloudfoundry.org/log-cache/pkg/client"
 )
 
 type CPUEntitlementAdminPlugin struct{}
@@ -36,12 +35,9 @@ func (p CPUEntitlementAdminPlugin) Run(cli plugin.CliConnection, args []string) 
 		os.Exit(1)
 	}
 
-	logCacheClient := logcache.NewClient(
-		logCacheURL,
-		logcache.WithHTTPClient(authenticatedBy(token.NewGetter(cli.AccessToken))),
-	)
-
-	reporter := reporter.New(cli, logCacheClient)
+	fetcher := metrics.NewLogCacheFetcher(logCacheURL, cli.AccessToken)
+	cfClient := cf.NewClient(cli)
+	reporter := reporter.New(cfClient, fetcher)
 	renderer := output.NewRenderer(ui)
 	runner := NewRunner(reporter, renderer)
 
@@ -103,21 +99,4 @@ func buildLogCacheURL(dopplerURL string) (string, error) {
 	logStreamURL.Host = "log-cache" + match[1]
 
 	return logStreamURL.String(), nil
-}
-
-func authenticatedBy(tokenGetter *token.Getter) *authClient {
-	return &authClient{tokenGetter: tokenGetter}
-}
-
-type authClient struct {
-	tokenGetter *token.Getter
-}
-
-func (a *authClient) Do(req *http.Request) (*http.Response, error) {
-	t, err := a.tokenGetter.Token()
-	if err != nil {
-		return nil, err
-	}
-	req.Header.Set("Authorization", t)
-	return http.DefaultClient.Do(req)
 }
