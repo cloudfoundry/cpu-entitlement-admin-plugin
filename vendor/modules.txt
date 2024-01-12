@@ -1,192 +1,226 @@
 # code.cloudfoundry.org/bytefmt v0.0.0-20190710193110-1eb035ffe2b6
+## explicit
 code.cloudfoundry.org/bytefmt
 # code.cloudfoundry.org/cli v6.46.1+incompatible
-code.cloudfoundry.org/cli/plugin
-code.cloudfoundry.org/cli/plugin/models
-code.cloudfoundry.org/cli/cf/terminal
-code.cloudfoundry.org/cli/cf/trace
-code.cloudfoundry.org/cli/cf
-code.cloudfoundry.org/cli/cf/configuration/coreconfig
-code.cloudfoundry.org/cli/cf/i18n
-code.cloudfoundry.org/cli/cf/configuration
-code.cloudfoundry.org/cli/cf/models
-code.cloudfoundry.org/cli/version
-code.cloudfoundry.org/cli/i18n/resources
-code.cloudfoundry.org/cli/util/ui
-code.cloudfoundry.org/cli/cf/formatters
-code.cloudfoundry.org/cli/command/translatableerror
-code.cloudfoundry.org/cli/types
-code.cloudfoundry.org/cli/util/configv3
+## explicit
 code.cloudfoundry.org/cli/actor/actionerror
 code.cloudfoundry.org/cli/api/cloudcontroller/ccerror
+code.cloudfoundry.org/cli/api/cloudcontroller/ccv2/constant
+code.cloudfoundry.org/cli/api/cloudcontroller/ccv3/constant
 code.cloudfoundry.org/cli/api/plugin/pluginerror
 code.cloudfoundry.org/cli/api/uaa
+code.cloudfoundry.org/cli/api/uaa/constant
+code.cloudfoundry.org/cli/api/uaa/internal
+code.cloudfoundry.org/cli/cf
+code.cloudfoundry.org/cli/cf/configuration
+code.cloudfoundry.org/cli/cf/configuration/coreconfig
+code.cloudfoundry.org/cli/cf/formatters
+code.cloudfoundry.org/cli/cf/i18n
+code.cloudfoundry.org/cli/cf/models
+code.cloudfoundry.org/cli/cf/terminal
+code.cloudfoundry.org/cli/cf/trace
+code.cloudfoundry.org/cli/command/translatableerror
+code.cloudfoundry.org/cli/i18n/resources
+code.cloudfoundry.org/cli/plugin
+code.cloudfoundry.org/cli/plugin/models
+code.cloudfoundry.org/cli/types
+code.cloudfoundry.org/cli/util
 code.cloudfoundry.org/cli/util/clissh/ssherror
+code.cloudfoundry.org/cli/util/configv3
 code.cloudfoundry.org/cli/util/download
 code.cloudfoundry.org/cli/util/manifest
 code.cloudfoundry.org/cli/util/manifestparser
-code.cloudfoundry.org/cli/util
-code.cloudfoundry.org/cli/api/cloudcontroller/ccv2/constant
-code.cloudfoundry.org/cli/api/cloudcontroller/ccv3/constant
-code.cloudfoundry.org/cli/api/uaa/constant
-code.cloudfoundry.org/cli/api/uaa/internal
+code.cloudfoundry.org/cli/util/ui
+code.cloudfoundry.org/cli/version
 # code.cloudfoundry.org/cpu-entitlement-plugin v0.0.0-20190820143339-d3a05702ac58
+## explicit; go 1.12
 code.cloudfoundry.org/cpu-entitlement-plugin/token
 # code.cloudfoundry.org/go-loggregator v7.4.0+incompatible
+## explicit
 code.cloudfoundry.org/go-loggregator/rpc/loggregator_v2
 # code.cloudfoundry.org/log-cache v2.3.1+incompatible
+## explicit
 code.cloudfoundry.org/log-cache/pkg/client
 code.cloudfoundry.org/log-cache/pkg/marshaler
 code.cloudfoundry.org/log-cache/pkg/rpc/logcache_v1
 # code.cloudfoundry.org/rfc5424 v0.0.0-20180905210152-236a6d29298a
+## explicit
 code.cloudfoundry.org/rfc5424
 # github.com/SermoDigital/jose v0.9.1
-github.com/SermoDigital/jose/jws
+## explicit
 github.com/SermoDigital/jose
 github.com/SermoDigital/jose/crypto
+github.com/SermoDigital/jose/jws
 github.com/SermoDigital/jose/jwt
 # github.com/blang/semver v3.5.1+incompatible
+## explicit
 github.com/blang/semver
 # github.com/bmatcuk/doublestar v1.1.5
+## explicit; go 1.12
 github.com/bmatcuk/doublestar
 # github.com/charlievieth/fs v0.0.0-20170613215519-7dc373669fa1
+## explicit
 github.com/charlievieth/fs
 # github.com/cloudfoundry/bosh-cli v6.0.0+incompatible
+## explicit
 github.com/cloudfoundry/bosh-cli/director/template
 # github.com/cloudfoundry/bosh-utils v0.0.0-20190803100152-d286f594c8d9
+## explicit
 github.com/cloudfoundry/bosh-utils/errors
 github.com/cloudfoundry/bosh-utils/logger
 github.com/cloudfoundry/bosh-utils/system
 # github.com/cppforlife/go-patch v0.2.0
+## explicit
 github.com/cppforlife/go-patch/patch
 # github.com/fatih/color v0.0.0-20181010231311-3f9d52f7176a
+## explicit
 github.com/fatih/color
 # github.com/golang/protobuf v1.3.2
+## explicit
 github.com/golang/protobuf/jsonpb
 github.com/golang/protobuf/proto
-github.com/golang/protobuf/ptypes/struct
-github.com/golang/protobuf/protoc-gen-go/generator
-github.com/golang/protobuf/ptypes/any
-github.com/golang/protobuf/ptypes/duration
-github.com/golang/protobuf/ptypes/timestamp
-github.com/golang/protobuf/ptypes/wrappers
 github.com/golang/protobuf/protoc-gen-go/descriptor
-github.com/golang/protobuf/ptypes
+github.com/golang/protobuf/protoc-gen-go/generator
 github.com/golang/protobuf/protoc-gen-go/generator/internal/remap
 github.com/golang/protobuf/protoc-gen-go/plugin
+github.com/golang/protobuf/ptypes
+github.com/golang/protobuf/ptypes/any
+github.com/golang/protobuf/ptypes/duration
+github.com/golang/protobuf/ptypes/struct
+github.com/golang/protobuf/ptypes/timestamp
+github.com/golang/protobuf/ptypes/wrappers
 # github.com/google/uuid v1.1.1
+## explicit
 github.com/google/uuid
 # github.com/grpc-ecosystem/grpc-gateway v1.9.5
+## explicit
+github.com/grpc-ecosystem/grpc-gateway/internal
 github.com/grpc-ecosystem/grpc-gateway/runtime
 github.com/grpc-ecosystem/grpc-gateway/utilities
-github.com/grpc-ecosystem/grpc-gateway/internal
 # github.com/hpcloud/tail v1.0.0
+## explicit
 github.com/hpcloud/tail
 github.com/hpcloud/tail/ratelimiter
 github.com/hpcloud/tail/util
 github.com/hpcloud/tail/watch
 github.com/hpcloud/tail/winfile
 # github.com/konsorten/go-windows-terminal-sequences v1.0.1
+## explicit
 github.com/konsorten/go-windows-terminal-sequences
 # github.com/lunixbochs/vtclean v1.0.0
+## explicit
 github.com/lunixbochs/vtclean
 # github.com/mattn/go-colorable v0.1.2
+## explicit
 github.com/mattn/go-colorable
 # github.com/mattn/go-isatty v0.0.8
+## explicit
 github.com/mattn/go-isatty
 # github.com/mattn/go-runewidth v0.0.4
+## explicit
 github.com/mattn/go-runewidth
 # github.com/onsi/ginkgo v1.10.1
+## explicit
 github.com/onsi/ginkgo
 github.com/onsi/ginkgo/config
 github.com/onsi/ginkgo/internal/codelocation
+github.com/onsi/ginkgo/internal/containernode
 github.com/onsi/ginkgo/internal/failer
+github.com/onsi/ginkgo/internal/leafnodes
 github.com/onsi/ginkgo/internal/remote
+github.com/onsi/ginkgo/internal/spec
+github.com/onsi/ginkgo/internal/spec_iterator
+github.com/onsi/ginkgo/internal/specrunner
 github.com/onsi/ginkgo/internal/suite
 github.com/onsi/ginkgo/internal/testingtproxy
 github.com/onsi/ginkgo/internal/writer
 github.com/onsi/ginkgo/reporters
 github.com/onsi/ginkgo/reporters/stenographer
 github.com/onsi/ginkgo/reporters/stenographer/support/go-colorable
-github.com/onsi/ginkgo/types
-github.com/onsi/ginkgo/internal/spec_iterator
-github.com/onsi/ginkgo/internal/containernode
-github.com/onsi/ginkgo/internal/leafnodes
-github.com/onsi/ginkgo/internal/spec
-github.com/onsi/ginkgo/internal/specrunner
 github.com/onsi/ginkgo/reporters/stenographer/support/go-isatty
+github.com/onsi/ginkgo/types
 # github.com/onsi/gomega v1.7.0
+## explicit
 github.com/onsi/gomega
+github.com/onsi/gomega/format
 github.com/onsi/gomega/gbytes
 github.com/onsi/gomega/gexec
 github.com/onsi/gomega/internal/assertion
 github.com/onsi/gomega/internal/asyncassertion
+github.com/onsi/gomega/internal/oraclematcher
 github.com/onsi/gomega/internal/testingtsupport
 github.com/onsi/gomega/matchers
-github.com/onsi/gomega/types
-github.com/onsi/gomega/format
-github.com/onsi/gomega/internal/oraclematcher
 github.com/onsi/gomega/matchers/support/goraph/bipartitegraph
 github.com/onsi/gomega/matchers/support/goraph/edge
 github.com/onsi/gomega/matchers/support/goraph/node
 github.com/onsi/gomega/matchers/support/goraph/util
+github.com/onsi/gomega/types
 # github.com/sirupsen/logrus v1.4.2
+## explicit
 github.com/sirupsen/logrus
 # github.com/vito/go-interact v1.0.0
+## explicit; go 1.12
 github.com/vito/go-interact/interact
 github.com/vito/go-interact/interact/terminal
 # golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
+## explicit
 golang.org/x/crypto/ssh/terminal
 # golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3
+## explicit
 golang.org/x/net/context
-golang.org/x/net/trace
+golang.org/x/net/html
+golang.org/x/net/html/atom
 golang.org/x/net/html/charset
-golang.org/x/net/internal/timeseries
+golang.org/x/net/http/httpguts
 golang.org/x/net/http2
 golang.org/x/net/http2/hpack
-golang.org/x/net/html
-golang.org/x/net/http/httpguts
 golang.org/x/net/idna
-golang.org/x/net/html/atom
+golang.org/x/net/internal/timeseries
+golang.org/x/net/trace
 # golang.org/x/sys v0.0.0-20190422165155-953cdadca894
+## explicit; go 1.12
 golang.org/x/sys/unix
 golang.org/x/sys/windows
 # golang.org/x/text v0.3.0
-golang.org/x/text/language
+## explicit
 golang.org/x/text/encoding
 golang.org/x/text/encoding/charmap
 golang.org/x/text/encoding/htmlindex
-golang.org/x/text/transform
-golang.org/x/text/internal/tag
-golang.org/x/text/encoding/internal/identifier
 golang.org/x/text/encoding/internal
+golang.org/x/text/encoding/internal/identifier
 golang.org/x/text/encoding/japanese
 golang.org/x/text/encoding/korean
 golang.org/x/text/encoding/simplifiedchinese
 golang.org/x/text/encoding/traditionalchinese
 golang.org/x/text/encoding/unicode
+golang.org/x/text/internal/tag
+golang.org/x/text/internal/utf8internal
+golang.org/x/text/language
+golang.org/x/text/runes
 golang.org/x/text/secure/bidirule
+golang.org/x/text/transform
 golang.org/x/text/unicode/bidi
 golang.org/x/text/unicode/norm
-golang.org/x/text/internal/utf8internal
-golang.org/x/text/runes
 # google.golang.org/genproto v0.0.0-20190801165951-fa694d86fc64
+## explicit
 google.golang.org/genproto/googleapis/api/annotations
 google.golang.org/genproto/googleapis/api/httpbody
-google.golang.org/genproto/protobuf/field_mask
 google.golang.org/genproto/googleapis/rpc/status
+google.golang.org/genproto/protobuf/field_mask
 # google.golang.org/grpc v1.22.1
+## explicit
 google.golang.org/grpc
-google.golang.org/grpc/codes
-google.golang.org/grpc/grpclog
-google.golang.org/grpc/status
-google.golang.org/grpc/metadata
 google.golang.org/grpc/balancer
+google.golang.org/grpc/balancer/base
 google.golang.org/grpc/balancer/roundrobin
+google.golang.org/grpc/binarylog/grpc_binarylog_v1
+google.golang.org/grpc/codes
 google.golang.org/grpc/connectivity
 google.golang.org/grpc/credentials
+google.golang.org/grpc/credentials/internal
 google.golang.org/grpc/encoding
 google.golang.org/grpc/encoding/proto
+google.golang.org/grpc/grpclog
 google.golang.org/grpc/internal
 google.golang.org/grpc/internal/backoff
 google.golang.org/grpc/internal/balancerload
@@ -195,8 +229,10 @@ google.golang.org/grpc/internal/channelz
 google.golang.org/grpc/internal/envconfig
 google.golang.org/grpc/internal/grpcrand
 google.golang.org/grpc/internal/grpcsync
+google.golang.org/grpc/internal/syscall
 google.golang.org/grpc/internal/transport
 google.golang.org/grpc/keepalive
+google.golang.org/grpc/metadata
 google.golang.org/grpc/naming
 google.golang.org/grpc/peer
 google.golang.org/grpc/resolver
@@ -204,16 +240,17 @@ google.golang.org/grpc/resolver/dns
 google.golang.org/grpc/resolver/passthrough
 google.golang.org/grpc/serviceconfig
 google.golang.org/grpc/stats
+google.golang.org/grpc/status
 google.golang.org/grpc/tap
-google.golang.org/grpc/balancer/base
-google.golang.org/grpc/credentials/internal
-google.golang.org/grpc/binarylog/grpc_binarylog_v1
-google.golang.org/grpc/internal/syscall
 # gopkg.in/cheggaaa/pb.v1 v1.0.28
+## explicit
 gopkg.in/cheggaaa/pb.v1
 # gopkg.in/fsnotify.v1 v1.4.7
+## explicit
 gopkg.in/fsnotify.v1
 # gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7
+## explicit
 gopkg.in/tomb.v1
 # gopkg.in/yaml.v2 v2.2.1
+## explicit
 gopkg.in/yaml.v2
