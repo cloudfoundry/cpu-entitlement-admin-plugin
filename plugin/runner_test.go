@@ -6,7 +6,7 @@ import (
 	"code.cloudfoundry.org/cpu-entitlement-admin-plugin/plugin"
 	"code.cloudfoundry.org/cpu-entitlement-admin-plugin/plugin/pluginfakes"
 	"code.cloudfoundry.org/cpu-entitlement-admin-plugin/reporter"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
