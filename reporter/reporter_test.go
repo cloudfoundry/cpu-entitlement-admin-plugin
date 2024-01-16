@@ -5,7 +5,7 @@ import (
 
 	reporterpkg "code.cloudfoundry.org/cpu-entitlement-admin-plugin/reporter"
 	"code.cloudfoundry.org/cpu-entitlement-admin-plugin/reporter/reporterfakes"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
