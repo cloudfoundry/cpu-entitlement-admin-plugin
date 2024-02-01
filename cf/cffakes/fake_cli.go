@@ -44,15 +44,16 @@ func (fake *FakeCli) GetSpace(arg1 string) (plugin_models.GetSpace_Model, error)
 	fake.getSpaceArgsForCall = append(fake.getSpaceArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.GetSpaceStub
+	fakeReturns := fake.getSpaceReturns
 	fake.recordInvocation("GetSpace", []interface{}{arg1})
 	fake.getSpaceMutex.Unlock()
-	if fake.GetSpaceStub != nil {
-		return fake.GetSpaceStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getSpaceReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -106,15 +107,16 @@ func (fake *FakeCli) GetSpaces() ([]plugin_models.GetSpaces_Model, error) {
 	ret, specificReturn := fake.getSpacesReturnsOnCall[len(fake.getSpacesArgsForCall)]
 	fake.getSpacesArgsForCall = append(fake.getSpacesArgsForCall, struct {
 	}{})
+	stub := fake.GetSpacesStub
+	fakeReturns := fake.getSpacesReturns
 	fake.recordInvocation("GetSpaces", []interface{}{})
 	fake.getSpacesMutex.Unlock()
-	if fake.GetSpacesStub != nil {
-		return fake.GetSpacesStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getSpacesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 

@@ -29,15 +29,16 @@ func (fake *FakeCloudFoundryClient) GetSpaces() ([]reporter.Space, error) {
 	ret, specificReturn := fake.getSpacesReturnsOnCall[len(fake.getSpacesArgsForCall)]
 	fake.getSpacesArgsForCall = append(fake.getSpacesArgsForCall, struct {
 	}{})
+	stub := fake.GetSpacesStub
+	fakeReturns := fake.getSpacesReturns
 	fake.recordInvocation("GetSpaces", []interface{}{})
 	fake.getSpacesMutex.Unlock()
-	if fake.GetSpacesStub != nil {
-		return fake.GetSpacesStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getSpacesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 

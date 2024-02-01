@@ -31,15 +31,16 @@ func (fake *FakeMetricsFetcher) FetchInstanceEntitlementUsages(arg1 string) ([]f
 	fake.fetchInstanceEntitlementUsagesArgsForCall = append(fake.fetchInstanceEntitlementUsagesArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.FetchInstanceEntitlementUsagesStub
+	fakeReturns := fake.fetchInstanceEntitlementUsagesReturns
 	fake.recordInvocation("FetchInstanceEntitlementUsages", []interface{}{arg1})
 	fake.fetchInstanceEntitlementUsagesMutex.Unlock()
-	if fake.FetchInstanceEntitlementUsagesStub != nil {
-		return fake.FetchInstanceEntitlementUsagesStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.fetchInstanceEntitlementUsagesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 

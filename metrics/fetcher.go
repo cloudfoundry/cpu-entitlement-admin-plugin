@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"code.cloudfoundry.org/cpu-entitlement-plugin/token"
-	logcache "code.cloudfoundry.org/log-cache/pkg/client"
+	logcache "code.cloudfoundry.org/go-log-cache/v2"
 )
 
 type LogCacheFetcher struct {

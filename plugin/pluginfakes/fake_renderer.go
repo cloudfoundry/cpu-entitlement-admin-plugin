@@ -30,15 +30,16 @@ func (fake *FakeRenderer) Render(arg1 reporter.Report) error {
 	fake.renderArgsForCall = append(fake.renderArgsForCall, struct {
 		arg1 reporter.Report
 	}{arg1})
+	stub := fake.RenderStub
+	fakeReturns := fake.renderReturns
 	fake.recordInvocation("Render", []interface{}{arg1})
 	fake.renderMutex.Unlock()
-	if fake.RenderStub != nil {
-		return fake.RenderStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.renderReturns
 	return fakeReturns.result1
 }
 
