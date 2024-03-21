@@ -2,8 +2,11 @@ module code.cloudfoundry.org/cpu-entitlement-admin-plugin
 
 go 1.21
 
+// cf-cli still requires go-interact v1 so we don't want to bump that.
+replace github.com/vito/go-interact => github.com/vito/go-interact v1.0.0 // indirect
+
 require (
-	code.cloudfoundry.org/cli v6.46.1+incompatible
+	code.cloudfoundry.org/cli v0.0.0-20220215194203-081f8aefeeef
 	code.cloudfoundry.org/cpu-entitlement-plugin v0.0.0-20190820143339-d3a05702ac58
 	code.cloudfoundry.org/go-log-cache/v2 v2.0.7
 	github.com/google/uuid v1.4.0
