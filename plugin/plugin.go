@@ -84,7 +84,7 @@ func buildLogCacheURL(dopplerURL string) (string, error) {
 		return "", err
 	}
 
-	regex, err := regexp.Compile("doppler(\\S+):443")
+	regex, err := regexp.Compile(`doppler(\S+):443`)
 	if err != nil {
 		return "", err
 	}
