@@ -19,10 +19,11 @@ import (
 type ColoringFunction func(value string, row int, col int) string
 
 func NotLoggedInText() string {
-	return fmt.Sprintf(T("Not logged in. Use '{{.CFLoginCommand}}' to log in.", map[string]interface{}{"CFLoginCommand": CommandColor(cf.Name + " " + "login")}))
+	return fmt.Sprintf(T("Not logged in. Use '{{.CFLoginCommand}}' or '{{.CFLoginCommandSSO}}' to log in.", map[string]interface{}{"CFLoginCommand": CommandColor(cf.Name + " " + "login"),
+		"CFLoginCommandSSO": CommandColor(cf.Name + " " + "login --sso")}))
 }
 
-//go:generate counterfeiter . UI
+//go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 . UI
 type UI interface {
 	PrintPaginator(rows []string, err error)
 	Say(message string, args ...interface{})

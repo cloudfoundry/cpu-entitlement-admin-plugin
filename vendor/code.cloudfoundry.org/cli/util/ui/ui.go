@@ -6,6 +6,8 @@
 package ui
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -28,7 +30,7 @@ var realInteract interactorFunc = func(prompt string, choices ...interact.Choice
 	}
 }
 
-//go:generate counterfeiter . Interactor
+//go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 . Interactor
 
 // Interactor hides interact.NewInteraction for testing purposes
 type Interactor interface {
@@ -53,7 +55,7 @@ func (w *interactionWrapper) SetOut(o io.Writer) {
 	w.Output = o
 }
 
-//go:generate counterfeiter . Exiter
+//go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 . Exiter
 
 // Exiter hides os.Exit for testing purposes
 type Exiter interface {
@@ -112,6 +114,32 @@ func NewUI(config Config) (*UI, error) {
 		OutForInteration: os.Stdout,
 		Err:              os.Stderr,
 		colorEnabled:     config.ColorEnabled(),
+		translate:        translateFunc,
+		terminalLock:     &sync.Mutex{},
+		Exiter:           realExiter,
+		fileLock:         &sync.Mutex{},
+		Interactor:       realInteract,
+		IsTTY:            config.IsTTY(),
+		TerminalWidth:    config.TerminalWidth(),
+		TimezoneLocation: location,
+	}, nil
+}
+
+// NewPluginUI will return a UI object where OUT and ERR are customizable.
+func NewPluginUI(config Config, outBuffer io.Writer, errBuffer io.Writer) (*UI, error) {
+	translateFunc, translationError := GetTranslationFunc(config)
+	if translationError != nil {
+		return nil, translationError
+	}
+
+	location := time.Now().Location()
+
+	return &UI{
+		In:               nil,
+		Out:              outBuffer,
+		OutForInteration: outBuffer,
+		Err:              errBuffer,
+		colorEnabled:     configv3.ColorDisabled,
 		translate:        translateFunc,
 		terminalLock:     &sync.Mutex{},
 		Exiter:           realExiter,
@@ -248,30 +276,106 @@ func (ui *UI) DisplayTextWithFlavor(template string, templateValues ...map[strin
 	fmt.Fprintf(ui.Out, "%s\n", ui.TranslateText(template, firstTemplateValues))
 }
 
-// DisplayWarning translates the warning, substitutes in templateValues, and
-// outputs to ui.Err. Only the first map in templateValues is used.
-func (ui *UI) DisplayWarning(template string, templateValues ...map[string]interface{}) {
-	fmt.Fprintf(ui.Err, "%s\n\n", ui.TranslateText(template, templateValues...))
-}
-
-// DisplayWarnings translates the warnings and outputs to ui.Err.
-func (ui *UI) DisplayWarnings(warnings []string) {
-	for _, warning := range warnings {
-		fmt.Fprintf(ui.Err, "%s\n", ui.TranslateText(warning))
+func getIndent(depth int, addHyphen bool) string {
+	if depth == 0 {
+		return ""
 	}
-	if len(warnings) > 0 {
-		fmt.Fprintln(ui.Err)
+	indent := strings.Repeat("  ", depth-1)
+	if addHyphen {
+		return indent + "- "
+	} else {
+		return indent + "  "
 	}
 }
 
-// DisplayWarningV7 translates the warning, substitutes in templateValues, and
-// outputs to ui.Err. Only the first map in templateValues is used.
-// This command has one fewer newline than DisplayWarning. Use it before an OK message in V7.
-func (ui *UI) DisplayWarningV7(template string, templateValues ...map[string]interface{}) {
-	fmt.Fprintf(ui.Err, "%s\n", ui.TranslateText(template, templateValues...))
+// DisplayDiffAddition displays added lines in a diff, colored green and prefixed with '+'
+func (ui *UI) DisplayDiffAddition(lines string, depth int, addHyphen bool) {
+	ui.terminalLock.Lock()
+	defer ui.terminalLock.Unlock()
+
+	indent := getIndent(depth, addHyphen)
+
+	for i, line := range strings.Split(lines, "\n") {
+		if line == "" {
+			continue
+		}
+		if i > 0 {
+			indent = getIndent(depth, false)
+		}
+		template := "+ " + indent + line
+		formatted := ui.modifyColor(template, color.New(color.FgGreen))
+
+		fmt.Fprintf(ui.Out, "%s\n", formatted)
+	}
 }
 
-// FlushDeferred diplays text previously deferred (using DeferText) to the UI's
+// DisplayDiffRemoval displays removed lines in a diff, colored red and prefixed with '-'
+func (ui *UI) DisplayDiffRemoval(lines string, depth int, addHyphen bool) {
+	ui.terminalLock.Lock()
+	defer ui.terminalLock.Unlock()
+
+	indent := getIndent(depth, addHyphen)
+
+	for i, line := range strings.Split(lines, "\n") {
+		if line == "" {
+			continue
+		}
+		if i > 0 {
+			indent = getIndent(depth, false)
+		}
+		template := "- " + indent + line
+		formatted := ui.modifyColor(template, color.New(color.FgRed))
+
+		fmt.Fprintf(ui.Out, "%s\n", formatted)
+	}
+}
+
+// DisplayDiffUnchanged displays unchanged lines in a diff, with no color or prefix
+func (ui *UI) DisplayDiffUnchanged(lines string, depth int, addHyphen bool) {
+	ui.terminalLock.Lock()
+	defer ui.terminalLock.Unlock()
+
+	indent := getIndent(depth, addHyphen)
+
+	for i, line := range strings.Split(lines, "\n") {
+		if line == "" {
+			continue
+		}
+		if i > 0 {
+			indent = getIndent(depth, false)
+		}
+		template := "  " + indent + line
+
+		fmt.Fprintf(ui.Out, "%s\n", template)
+	}
+}
+
+// DisplayJSON encodes and indents the input
+// and outputs the result to ui.Out.
+func (ui *UI) DisplayJSON(name string, jsonData interface{}) error {
+	ui.terminalLock.Lock()
+	defer ui.terminalLock.Unlock()
+
+	buff := new(bytes.Buffer)
+	encoder := json.NewEncoder(buff)
+	encoder.SetEscapeHTML(false)
+	encoder.SetIndent("", "  ")
+
+	err := encoder.Encode(jsonData)
+	if err != nil {
+		return err
+	}
+
+	if name != "" {
+		fmt.Fprintf(ui.Out, "%s\n", fmt.Sprintf("%s: %s", name, buff))
+	} else {
+		fmt.Fprintf(ui.Out, "%s\n", buff)
+	}
+
+	return nil
+}
+
+// FlushDeferred displays text previously deferred (using DeferText) to the UI's
 // `Out`.
 func (ui *UI) FlushDeferred() {
 	ui.terminalLock.Lock()

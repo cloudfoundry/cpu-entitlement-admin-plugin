@@ -7,9 +7,6 @@ import (
 	"regexp"
 )
 
-// tokenEndpoint is explicitly excluded from sanitization
-const tokenEndpoint = "token_endpoint"
-
 var keysToSanitize = regexp.MustCompile("(?i)token|password")
 var sanitizeURIParams = regexp.MustCompile(`([&?]password)=[A-Za-z0-9\-._~!$'()*+,;=:@/?]*`)
 var sanitizeURLPassword = regexp.MustCompile(`([\d\w]+):\/\/([^:]+):(?:[^@]+)@`)
@@ -42,15 +39,16 @@ func iterateAndRedact(blob interface{}) interface{} {
 	case string:
 		return sanitizeURL(v)
 	case []interface{}:
-		var list []interface{}
-		for _, val := range v {
-			list = append(list, iterateAndRedact(val))
+		list := make([]interface{}, len(v))
+
+		for index, val := range v {
+			list[index] = iterateAndRedact(val)
 		}
 
 		return list
 	case map[string]interface{}:
 		for key, value := range v {
-			if keysToSanitize.MatchString(key) && key != tokenEndpoint {
+			if keysToSanitize.MatchString(key) {
 				v[key] = RedactedValue
 			} else {
 				v[key] = iterateAndRedact(value)

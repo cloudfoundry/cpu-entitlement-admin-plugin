@@ -8,6 +8,13 @@ import (
 	"code.cloudfoundry.org/cli/version"
 )
 
+//go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 . UserConfig
+
+type UserConfig interface {
+	CurrentUser() (User, error)
+	CurrentUserName() (string, error)
+}
+
 // Config combines the settings taken from the .cf/config.json, os.ENV, and the
 // plugin config.
 type Config struct {
@@ -17,13 +24,15 @@ type Config struct {
 	// ENV stores the configuration from os.ENV
 	ENV EnvOverride
 
-	// Flags stores the configuration from gobal flags
+	// Flags stores the configuration from global flags
 	Flags FlagOverride
 
 	// detectedSettings are settings detected when the config is loaded.
 	detectedSettings detectedSettings
 
 	pluginsConfig PluginsConfig
+
+	UserConfig
 }
 
 // BinaryVersion is the current version of the CF binary.
@@ -96,4 +105,8 @@ func (config *Config) Verbose() (bool, []string) {
 	}
 
 	return verbose, filePath
+}
+
+func (config *Config) SetKubernetesAuthInfo(authInfo string) {
+	config.ConfigFile.CFOnK8s.AuthInfo = authInfo
 }

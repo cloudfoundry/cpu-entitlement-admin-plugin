@@ -2,55 +2,42 @@ package configv3
 
 import (
 	"time"
-
-	"github.com/SermoDigital/jose/jws"
 )
 
 // JSONConfig represents .cf/config.json.
 type JSONConfig struct {
-	ConfigVersion            int                `json:"ConfigVersion"`
-	Target                   string             `json:"Target"`
-	APIVersion               string             `json:"APIVersion"`
-	AuthorizationEndpoint    string             `json:"AuthorizationEndpoint"`
-	DopplerEndpoint          string             `json:"DopplerEndPoint"`
-	UAAEndpoint              string             `json:"UaaEndpoint"`
-	RoutingEndpoint          string             `json:"RoutingAPIEndpoint"`
 	AccessToken              string             `json:"AccessToken"`
-	SSHOAuthClient           string             `json:"SSHOAuthClient"`
-	UAAOAuthClient           string             `json:"UAAOAuthClient"`
-	UAAOAuthClientSecret     string             `json:"UAAOAuthClientSecret"`
-	UAAGrantType             string             `json:"UAAGrantType"`
-	RefreshToken             string             `json:"RefreshToken"`
-	TargetedOrganization     Organization       `json:"OrganizationFields"`
-	TargetedSpace            Space              `json:"SpaceFields"`
-	SkipSSLValidation        bool               `json:"SSLDisabled"`
+	APIVersion               string             `json:"APIVersion"`
 	AsyncTimeout             int                `json:"AsyncTimeout"`
-	Trace                    string             `json:"Trace"`
+	AuthorizationEndpoint    string             `json:"AuthorizationEndpoint"`
+	CFOnK8s                  CFOnK8s            `json:"CFOnK8s"`
 	ColorEnabled             string             `json:"ColorEnabled"`
+	ConfigVersion            int                `json:"ConfigVersion"`
+	DopplerEndpoint          string             `json:"DopplerEndPoint"`
 	Locale                   string             `json:"Locale"`
-	PluginRepositories       []PluginRepository `json:"PluginRepos"`
+	LogCacheEndpoint         string             `json:"LogCacheEndPoint"`
 	MinCLIVersion            string             `json:"MinCLIVersion"`
 	MinRecommendedCLIVersion string             `json:"MinRecommendedCLIVersion"`
+	NetworkPolicyV1Endpoint  string             `json:"NetworkPolicyV1Endpoint"`
+	TargetedOrganization     Organization       `json:"OrganizationFields"`
+	PluginRepositories       []PluginRepository `json:"PluginRepos"`
+	RefreshToken             string             `json:"RefreshToken"`
+	RoutingEndpoint          string             `json:"RoutingAPIEndpoint"`
+	TargetedSpace            Space              `json:"SpaceFields"`
+	SSHOAuthClient           string             `json:"SSHOAuthClient"`
+	SkipSSLValidation        bool               `json:"SSLDisabled"`
+	Target                   string             `json:"Target"`
+	Trace                    string             `json:"Trace"`
+	UAAEndpoint              string             `json:"UaaEndpoint"`
+	UAAGrantType             string             `json:"UAAGrantType"`
+	UAAOAuthClient           string             `json:"UAAOAuthClient"`
+	UAAOAuthClientSecret     string             `json:"UAAOAuthClientSecret"`
 }
 
 // Organization contains basic information about the targeted organization.
 type Organization struct {
-	GUID            string          `json:"GUID"`
-	Name            string          `json:"Name"`
-	QuotaDefinition QuotaDefinition `json:"QuotaDefinition"`
-}
-
-// QuotaDefinition contains information about the organization's quota.
-type QuotaDefinition struct {
-	GUID                    string `json:"guid"`
-	Name                    string `json:"name"`
-	MemoryLimit             int    `json:"memory_limit"`
-	InstanceMemoryLimit     int    `json:"instance_memory_limit"`
-	TotalRoutes             int    `json:"total_routes"`
-	TotalServices           int    `json:"total_services"`
-	NonBasicServicesAllowed bool   `json:"non_basic_services_allowed"`
-	AppInstanceLimit        int    `json:"app_instance_limit"`
-	TotalReservedRoutePorts int    `json:"total_reserved_route_ports"`
+	GUID string `json:"GUID"`
+	Name string `json:"Name"`
 }
 
 // Space contains basic information about the targeted space.
@@ -62,7 +49,10 @@ type Space struct {
 
 // User represents the user information provided by the JWT access token.
 type User struct {
-	Name string
+	Name     string
+	GUID     string
+	Origin   string
+	IsClient bool
 }
 
 // AccessToken returns the access token for making authenticated API calls.
@@ -75,19 +65,9 @@ func (config *Config) APIVersion() string {
 	return config.ConfigFile.APIVersion
 }
 
-// CurrentUser returns user information decoded from the JWT access token in
-// .cf/config.json.
-func (config *Config) CurrentUser() (User, error) {
-	return decodeUserFromJWT(config.ConfigFile.AccessToken)
-}
-
-// CurrentUserName returns the name of a user as returned by CurrentUser()
-func (config *Config) CurrentUserName() (string, error) {
-	user, err := config.CurrentUser()
-	if err != nil {
-		return "", err
-	}
-	return user.Name, nil
+// AuthorizationEndpoint returns the authorization endpoint
+func (config *Config) AuthorizationEndpoint() string {
+	return config.ConfigFile.AuthorizationEndpoint
 }
 
 // HasTargetedOrganization returns true if the organization is set.
@@ -98,6 +78,11 @@ func (config *Config) HasTargetedOrganization() bool {
 // HasTargetedSpace returns true if the space is set.
 func (config *Config) HasTargetedSpace() bool {
 	return config.ConfigFile.TargetedSpace.GUID != ""
+}
+
+// LogCacheEndpoint returns the log cache endpoint.
+func (config *Config) LogCacheEndpoint() string {
+	return config.ConfigFile.LogCacheEndpoint
 }
 
 // MinCLIVersion returns the minimum CLI version required by the CC.
@@ -116,6 +101,11 @@ func (config *Config) OverallPollingTimeout() time.Duration {
 	return time.Duration(config.ConfigFile.AsyncTimeout) * time.Minute
 }
 
+// NetworkPolicyV1Endpoint returns the endpoint for V1 of the networking API
+func (config *Config) NetworkPolicyV1Endpoint() string {
+	return config.ConfigFile.NetworkPolicyV1Endpoint
+}
+
 // RefreshToken returns the refresh token for getting a new access token.
 func (config *Config) RefreshToken() string {
 	return config.ConfigFile.RefreshToken
@@ -126,9 +116,28 @@ func (config *Config) RoutingEndpoint() string {
 	return config.ConfigFile.RoutingEndpoint
 }
 
+// SetAsyncTimeout sets the async timeout.
+func (config *Config) SetAsyncTimeout(timeout int) {
+	config.ConfigFile.AsyncTimeout = timeout
+}
+
 // SetAccessToken sets the current access token.
 func (config *Config) SetAccessToken(accessToken string) {
 	config.ConfigFile.AccessToken = accessToken
+}
+
+// SetColorEnabled sets the color enabled feature to true or false
+func (config *Config) SetColorEnabled(enabled string) {
+	config.ConfigFile.ColorEnabled = enabled
+}
+
+// SetLocale sets the locale, or clears the field if requested
+func (config *Config) SetLocale(locale string) {
+	if locale == "CLEAR" {
+		config.ConfigFile.Locale = ""
+	} else {
+		config.ConfigFile.Locale = locale
+	}
 }
 
 // SetMinCLIVersion sets the minimum CLI version required by the CC.
@@ -140,7 +149,6 @@ func (config *Config) SetMinCLIVersion(minVersion string) {
 func (config *Config) SetOrganizationInformation(guid string, name string) {
 	config.ConfigFile.TargetedOrganization.GUID = guid
 	config.ConfigFile.TargetedOrganization.Name = name
-	config.ConfigFile.TargetedOrganization.QuotaDefinition = QuotaDefinition{}
 }
 
 // SetRefreshToken sets the current refresh token.
@@ -157,16 +165,40 @@ func (config *Config) SetSpaceInformation(guid string, name string, allowSSH boo
 	config.ConfigFile.TargetedSpace.AllowSSH = allowSSH
 }
 
+type TargetInformationArgs struct {
+	Api               string
+	ApiVersion        string
+	Auth              string
+	Doppler           string
+	LogCache          string
+	MinCLIVersion     string
+	NetworkPolicyV1   string
+	Routing           string
+	SkipSSLValidation bool
+	UAA               string
+	CFOnK8s           bool
+}
+
 // SetTargetInformation sets the currently targeted CC API and related other
 // related API URLs.
-func (config *Config) SetTargetInformation(api string, apiVersion string, auth string, minCLIVersion string, doppler string, routing string, skipSSLValidation bool) {
-	config.ConfigFile.Target = api
-	config.ConfigFile.APIVersion = apiVersion
-	config.ConfigFile.AuthorizationEndpoint = auth
-	config.SetMinCLIVersion(minCLIVersion)
-	config.ConfigFile.DopplerEndpoint = doppler
-	config.ConfigFile.RoutingEndpoint = routing
-	config.ConfigFile.SkipSSLValidation = skipSSLValidation
+func (config *Config) SetTargetInformation(args TargetInformationArgs) {
+	config.ConfigFile.Target = args.Api
+	config.ConfigFile.APIVersion = args.ApiVersion
+	config.SetMinCLIVersion(args.MinCLIVersion)
+	config.ConfigFile.DopplerEndpoint = args.Doppler
+	config.ConfigFile.LogCacheEndpoint = args.LogCache
+	config.ConfigFile.RoutingEndpoint = args.Routing
+	config.ConfigFile.SkipSSLValidation = args.SkipSSLValidation
+	config.ConfigFile.NetworkPolicyV1Endpoint = args.NetworkPolicyV1
+
+	config.ConfigFile.UAAEndpoint = args.UAA
+	config.ConfigFile.AuthorizationEndpoint = args.Auth
+
+	// NOTE: This gets written to the config file, but I do not believe it is currently
+	// ever read from there.
+	config.ConfigFile.AuthorizationEndpoint = args.Auth
+
+	config.ConfigFile.CFOnK8s.Enabled = args.CFOnK8s
 
 	config.UnsetOrganizationAndSpaceInformation()
 }
@@ -176,6 +208,11 @@ func (config *Config) SetTokenInformation(accessToken string, refreshToken strin
 	config.ConfigFile.AccessToken = accessToken
 	config.ConfigFile.RefreshToken = refreshToken
 	config.ConfigFile.SSHOAuthClient = sshOAuthClient
+}
+
+// SetTrace sets the trace field to either true, false, or a path to a file.
+func (config *Config) SetTrace(trace string) {
+	config.ConfigFile.Trace = trace
 }
 
 // SetUAAClientCredentials sets the client credentials.
@@ -228,6 +265,11 @@ func (config *Config) TargetedSpace() Space {
 	return config.ConfigFile.TargetedSpace
 }
 
+// UAAEndpoint returns the UAA endpoint
+func (config *Config) UAAEndpoint() string {
+	return config.ConfigFile.UAAEndpoint
+}
+
 // UAAGrantType returns the grant type of the supplied UAA credentials.
 func (config *Config) UAAGrantType() string {
 	return config.ConfigFile.UAAGrantType
@@ -262,36 +304,13 @@ func (config *Config) UnsetUserInformation() {
 	config.SetRefreshToken("")
 	config.SetUAAGrantType("")
 	config.SetUAAClientCredentials(DefaultUAAOAuthClient, DefaultUAAOAuthClientSecret)
+	config.SetKubernetesAuthInfo("")
 
 	config.UnsetOrganizationAndSpaceInformation()
-
 }
 
 // V7SetSpaceInformation sets the currently targeted space.
 func (config *Config) V7SetSpaceInformation(guid string, name string) {
 	config.ConfigFile.TargetedSpace.GUID = guid
 	config.ConfigFile.TargetedSpace.Name = name
-}
-
-func decodeUserFromJWT(accessToken string) (User, error) {
-	if accessToken == "" {
-		return User{}, nil
-	}
-
-	token, err := jws.ParseJWT([]byte(accessToken[7:]))
-	if err != nil {
-		return User{}, err
-	}
-
-	claims := token.Claims()
-
-	var ID string
-	if claims.Has("user_name") {
-		ID = claims.Get("user_name").(string)
-	} else {
-		ID = claims.Get("client_id").(string)
-	}
-	return User{
-		Name: ID,
-	}, nil
 }
