@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-set -e
-
-pushd cpu-entitlement-admin-plugin
-ginkgo -v e2e
-popd
