@@ -17,17 +17,17 @@ require (
 )
 
 require (
-	code.cloudfoundry.org/bytefmt v0.0.0-20240405133830-27584b257a4e // indirect
+	code.cloudfoundry.org/bytefmt v0.0.0-20240405144452-ebb2996022ca // indirect
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.0 // indirect
 	code.cloudfoundry.org/jsonry v1.1.4 // indirect
-	code.cloudfoundry.org/tlsconfig v0.0.0-20240405133857-3a238841129c // indirect
+	code.cloudfoundry.org/tlsconfig v0.0.0-20240405144453-942277399864 // indirect
 	github.com/SermoDigital/jose v0.9.2-0.20161205224733-f6df55f235c2 // indirect
 	github.com/blang/semver v3.5.1+incompatible // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
 	github.com/bmatcuk/doublestar v1.3.4 // indirect
 	github.com/charlievieth/fs v0.0.3 // indirect
 	github.com/cloudfoundry/bosh-cli v6.4.1+incompatible // indirect
-	github.com/cloudfoundry/bosh-utils v0.0.455 // indirect
+	github.com/cloudfoundry/bosh-utils v0.0.456 // indirect
 	github.com/cppforlife/go-patch v0.2.0 // indirect
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/go-logr/logr v1.4.1 // indirect
