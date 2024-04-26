@@ -17,7 +17,7 @@ require (
 )
 
 require (
-	code.cloudfoundry.org/bytefmt v0.0.0-20240423163756-f0951006707a // indirect
+	code.cloudfoundry.org/bytefmt v0.0.0-20240425163905-bcdc1ad063ea // indirect
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1 // indirect
 	code.cloudfoundry.org/jsonry v1.1.4 // indirect
 	code.cloudfoundry.org/tlsconfig v0.0.0-20240423163804-1b0dcf57fddb // indirect
