@@ -17,7 +17,7 @@ require (
 )
 
 require (
-	code.cloudfoundry.org/bytefmt v0.0.0-20240508165154-767138797fdf // indirect
+	code.cloudfoundry.org/bytefmt v0.0.0-20240509165307-2f6667c85be0 // indirect
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1 // indirect
 	code.cloudfoundry.org/jsonry v1.1.4 // indirect
 	code.cloudfoundry.org/tlsconfig v0.0.0-20240506165053-ee50c1ee9388 // indirect
@@ -49,8 +49,8 @@ require (
 	golang.org/x/term v0.20.0 // indirect
 	golang.org/x/text v0.15.0 // indirect
 	golang.org/x/tools v0.21.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20240506185236-b8a5c65736ae // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240506185236-b8a5c65736ae // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20240509183442-62759503f434 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240509183442-62759503f434 // indirect
 	google.golang.org/grpc v1.63.2 // indirect
 	google.golang.org/protobuf v1.34.1 // indirect
 	gopkg.in/cheggaaa/pb.v1 v1.0.28 // indirect
