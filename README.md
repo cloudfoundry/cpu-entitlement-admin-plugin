@@ -1,24 +1,16 @@
-# Contributing
+# cpu-entitlement-admin-plugin
 
-See the [Contributing.md](./.github/CONTRIBUTING.md) for more
-information on how to contribute.
+[![Go Report
+Card](https://goreportcard.com/badge/code.cloudfoundry.org/cpu-entitlement-admin-plugin)](https://goreportcard.com/report/code.cloudfoundry.org/cpu-entitlement-admin-plugin)
+[![Go
+Reference](https://pkg.go.dev/badge/code.cloudfoundry.org/cpu-entitlement-admin-plugin.svg)](https://pkg.go.dev/code.cloudfoundry.org/cpu-entitlement-admin-plugin)
 
-# Working Group Charter
+TO-BE-DEPRECATED
 
-This repository is maintained by [App Runtime
-Platform](https://github.com/cloudfoundry/community/blob/main/toc/working-groups/app-runtime-platform.md)
-under `Diego` area.
-
-# Contributing
-
-See the [Contributing.md](./.github/CONTRIBUTING.md) for more
-information on how to contribute.
-
-# Working Group Charter
-
-This repository is maintained by [App Runtime
-Platform](https://github.com/cloudfoundry/community/blob/main/toc/working-groups/app-runtime-platform.md)
-under `Networking` area.
+> \[!NOTE\]
+>
+> This repository should be imported as
+> `code.cloudfoundry.org/cpu-entitlement-admin-plugin`.
 
 # Contributing
 
@@ -29,7 +21,7 @@ information on how to contribute.
 
 This repository is maintained by [App Runtime
 Platform](https://github.com/cloudfoundry/community/blob/main/toc/working-groups/app-runtime-platform.md)
-under `Diego` area.
+under `Garden Containers` area.
 
 > \[!IMPORTANT\]
 >
