@@ -20,7 +20,7 @@ require (
 	code.cloudfoundry.org/bytefmt v0.0.0-20240510175427-fd0528cc37f1 // indirect
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1 // indirect
 	code.cloudfoundry.org/jsonry v1.1.4 // indirect
-	code.cloudfoundry.org/tlsconfig v0.0.0-20240510172918-c1e19801fe80 // indirect
+	code.cloudfoundry.org/tlsconfig v0.0.0-20240516170203-d50b3d56ba06 // indirect
 	github.com/SermoDigital/jose v0.9.2-0.20161205224733-f6df55f235c2 // indirect
 	github.com/blang/semver v3.5.1+incompatible // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
