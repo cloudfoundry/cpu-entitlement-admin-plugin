@@ -17,7 +17,7 @@ require (
 )
 
 require (
-	code.cloudfoundry.org/bytefmt v0.0.0-20240522170716-2951b8ebd80e // indirect
+	code.cloudfoundry.org/bytefmt v0.0.0-20240524171005-f1d9d5c55b92 // indirect
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1 // indirect
 	code.cloudfoundry.org/jsonry v1.1.4 // indirect
 	code.cloudfoundry.org/tlsconfig v0.0.0-20240522170710-79df114af82a // indirect
@@ -27,7 +27,7 @@ require (
 	github.com/bmatcuk/doublestar v1.3.4 // indirect
 	github.com/charlievieth/fs v0.0.3 // indirect
 	github.com/cloudfoundry/bosh-cli v6.4.1+incompatible // indirect
-	github.com/cloudfoundry/bosh-utils v0.0.466 // indirect
+	github.com/cloudfoundry/bosh-utils v0.0.467 // indirect
 	github.com/cppforlife/go-patch v0.2.0 // indirect
 	github.com/fatih/color v1.17.0 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
