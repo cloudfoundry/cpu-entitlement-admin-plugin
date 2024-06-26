@@ -32,8 +32,8 @@ cloud.google.com/go/storage v1.8.0/go.mod h1:Wv1Oy7z6Yz3DshWRJFhqM/UCfaWIRTdp0RX
 cloud.google.com/go/storage v1.10.0/go.mod h1:FLPqc6j+Ki4BU591ie1oL6qBQGu2Bl/tZ9ullr3+Kg0=
 code.cloudfoundry.org/bytefmt v0.0.0-20170428003108-f4415fafc561/go.mod h1:wN/zk7mhREp/oviagqUXY3EwuHhWyOvAdsn5Y4CzOrc=
 code.cloudfoundry.org/bytefmt v0.0.0-20190710193110-1eb035ffe2b6/go.mod h1:wN/zk7mhREp/oviagqUXY3EwuHhWyOvAdsn5Y4CzOrc=
-code.cloudfoundry.org/bytefmt v0.0.0-20240622173923-7a5a4f8651ac h1:gpAFNBDNojWl/isUfuQUQwcqVuyERxgLbG9p9shitgM=
-code.cloudfoundry.org/bytefmt v0.0.0-20240622173923-7a5a4f8651ac/go.mod h1:drABzJP24HWhiFt8QZdHCGUsXALfs3uUFxDj3qrM1h8=
+code.cloudfoundry.org/bytefmt v0.0.0-20240625174231-fca5dc407bce h1:r0OD9Ami2UpTFvll2EPB4PeBibq0MJpRdRYBRI9Vr2g=
+code.cloudfoundry.org/bytefmt v0.0.0-20240625174231-fca5dc407bce/go.mod h1:4RuoEh4g45Sl0b1JOmJvVs2d+2mrdd9NzWHx3VbGx9Y=
 code.cloudfoundry.org/cfnetworking-cli-api v0.0.0-20190103195135-4b04f26287a6/go.mod h1:u5FovqC5GGAEbFPz+IdjycDA+gIjhUwqxnu0vbHwVeM=
 code.cloudfoundry.org/cli v0.0.0-20181126222710-7168de1051d4/go.mod h1:e4d+EpbwevNhyTZKybrLlyTvpH+W22vMsmdmcTxs/Fo=
 code.cloudfoundry.org/cli v0.0.0-20220215194203-081f8aefeeef h1:XeVbdaIIKdXyYEg8vH8b1NVCjELkEzVDK8aPiWQ2GB0=
