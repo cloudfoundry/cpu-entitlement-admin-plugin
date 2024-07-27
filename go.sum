@@ -32,8 +32,8 @@ cloud.google.com/go/storage v1.8.0/go.mod h1:Wv1Oy7z6Yz3DshWRJFhqM/UCfaWIRTdp0RX
 cloud.google.com/go/storage v1.10.0/go.mod h1:FLPqc6j+Ki4BU591ie1oL6qBQGu2Bl/tZ9ullr3+Kg0=
 code.cloudfoundry.org/bytefmt v0.0.0-20170428003108-f4415fafc561/go.mod h1:wN/zk7mhREp/oviagqUXY3EwuHhWyOvAdsn5Y4CzOrc=
 code.cloudfoundry.org/bytefmt v0.0.0-20190710193110-1eb035ffe2b6/go.mod h1:wN/zk7mhREp/oviagqUXY3EwuHhWyOvAdsn5Y4CzOrc=
-code.cloudfoundry.org/bytefmt v0.0.0-20240725181214-870a2a4a34a6 h1:5wA7H4/Uyij80SkebgeIbSSUw14EzaaWw8/VSt/9ke8=
-code.cloudfoundry.org/bytefmt v0.0.0-20240725181214-870a2a4a34a6/go.mod h1:0WabI+CfmksKbGuDTQSdOtS0iIfrWLzjLVbgviM82Hg=
+code.cloudfoundry.org/bytefmt v0.0.0-20240726181224-f9b67668c814 h1:2UI8GqeFmRjKufAUIh/0GaqTB/a99Vt/42Mm41DhB0M=
+code.cloudfoundry.org/bytefmt v0.0.0-20240726181224-f9b67668c814/go.mod h1:NIjSiocXDVQmE9GioPGxa84l9Fo8qEyjJhifL36Aoxw=
 code.cloudfoundry.org/cfnetworking-cli-api v0.0.0-20190103195135-4b04f26287a6/go.mod h1:u5FovqC5GGAEbFPz+IdjycDA+gIjhUwqxnu0vbHwVeM=
 code.cloudfoundry.org/cli v0.0.0-20181126222710-7168de1051d4/go.mod h1:e4d+EpbwevNhyTZKybrLlyTvpH+W22vMsmdmcTxs/Fo=
 code.cloudfoundry.org/cli v0.0.0-20220215194203-081f8aefeeef h1:XeVbdaIIKdXyYEg8vH8b1NVCjELkEzVDK8aPiWQ2GB0=
@@ -123,8 +123,8 @@ github.com/cloudfoundry/bosh-cli v6.4.1+incompatible h1:n5/+NIF9QxvGINOrjh6DmO+G
 github.com/cloudfoundry/bosh-cli v6.4.1+incompatible/go.mod h1:rzIB+e1sn7wQL/TJ54bl/FemPKRhXby5BIMS3tLuWFM=
 github.com/cloudfoundry/bosh-utils v0.0.0-20180315210917-c6a922e299b8/go.mod h1:JCrKwetZGjxbfq1U139TZuXDBfdGLtjOEAfxMWKV/QM=
 github.com/cloudfoundry/bosh-utils v0.0.0-20190803100152-d286f594c8d9/go.mod h1:JCrKwetZGjxbfq1U139TZuXDBfdGLtjOEAfxMWKV/QM=
-github.com/cloudfoundry/bosh-utils v0.0.479 h1:BO0iYxD6T+cHHA49eHZOXpKDoA1Lx6wJ4GF9ZCmoVjM=
-github.com/cloudfoundry/bosh-utils v0.0.479/go.mod h1:WBZukuDLR4lV6Kl1Z4/fATiJCTeEVhA8yPI/mWjxT1Q=
+github.com/cloudfoundry/bosh-utils v0.0.480 h1:Tclq/gqehPoE6bmnAs54RNHxghbo3e/8K/h02YlU6eU=
+github.com/cloudfoundry/bosh-utils v0.0.480/go.mod h1:/0UYmiJPPxmRwMeth69IH4A75wmL8x++Cj77SyIT/M8=
 github.com/cloudfoundry/cli-plugin-repo v0.0.0-20190722165608-274e782c6ebc/go.mod h1:yC/5vqtuzGhS40ZSeBtWvDMMrfdSeG673lF91gu5K+Y=
 github.com/cloudfoundry/custom-cats-reporters v0.0.2/go.mod h1:uxXHu50QB3u67C2PZlaFBlc9yTy9gQ4Nb+nL3J959bU=
 github.com/cloudfoundry/dropsonde v1.0.0/go.mod h1:6zwvrWK5TpxBVYi1cdkE5WDsIO8E0n7qAJg3wR9B67c=
@@ -262,8 +262,8 @@ github.com/google/pprof v0.0.0-20200229191704-1ebb73c60ed3/go.mod h1:ZgVRPoUq/hf
 github.com/google/pprof v0.0.0-20200430221834-fc25d7d30c6d/go.mod h1:ZgVRPoUq/hfqzAqh7sHMqb3I9Rq5C59dIz2SbBwJ4eM=
 github.com/google/pprof v0.0.0-20200708004538-1a94d8640e99/go.mod h1:ZgVRPoUq/hfqzAqh7sHMqb3I9Rq5C59dIz2SbBwJ4eM=
 github.com/google/pprof v0.0.0-20210407192527-94a9f03dee38/go.mod h1:kpwsk12EmLew5upagYY7GY0pfYCcupk39gWOCRROcvE=
-github.com/google/pprof v0.0.0-20240722153945-304e4f0156b8 h1:ssNFCCVmib/GQSzx3uCWyfMgOamLGWuGqlMS77Y1m3Y=
-github.com/google/pprof v0.0.0-20240722153945-304e4f0156b8/go.mod h1:K1liHPHnj73Fdn/EKuT8nrFqBihUSKXoLYU0BuatOYo=
+github.com/google/pprof v0.0.0-20240727154555-813a5fbdbec8 h1:FKHo8hFI3A+7w0aUQuYXQ+6EN5stWmeY/AZqtM8xk9k=
+github.com/google/pprof v0.0.0-20240727154555-813a5fbdbec8/go.mod h1:K1liHPHnj73Fdn/EKuT8nrFqBihUSKXoLYU0BuatOYo=
 github.com/google/renameio v0.1.0/go.mod h1:KWCgfxg9yswjAJkECMjeO8J8rahYeXnNhOm40UhjYkI=
 github.com/google/uuid v1.1.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
