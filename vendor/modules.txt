@@ -124,7 +124,7 @@ github.com/mattn/go-isatty
 # github.com/mattn/go-runewidth v0.0.16
 ## explicit; go 1.9
 github.com/mattn/go-runewidth
-# github.com/onsi/ginkgo/v2 v2.19.1
+# github.com/onsi/ginkgo/v2 v2.20.0
 ## explicit; go 1.20
 github.com/onsi/ginkgo/v2
 github.com/onsi/ginkgo/v2/config
@@ -173,7 +173,7 @@ github.com/vito/go-interact/interact/terminal
 # golang.org/x/crypto v0.26.0
 ## explicit; go 1.20
 golang.org/x/crypto/ssh/terminal
-# golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56
+# golang.org/x/exp v0.0.0-20240808152545-0cdaa3abc0fa
 ## explicit; go 1.20
 golang.org/x/exp/constraints
 golang.org/x/exp/slices
