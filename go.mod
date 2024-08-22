@@ -12,7 +12,7 @@ require (
 	code.cloudfoundry.org/cpu-entitlement-plugin v0.0.0-20190820143339-d3a05702ac58
 	code.cloudfoundry.org/go-log-cache/v2 v2.0.7
 	github.com/google/uuid v1.6.0
-	github.com/onsi/ginkgo/v2 v2.20.0
+	github.com/onsi/ginkgo/v2 v2.20.1
 	github.com/onsi/gomega v1.34.1
 )
 
