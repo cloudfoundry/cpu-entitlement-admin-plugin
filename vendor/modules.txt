@@ -1,4 +1,4 @@
-# code.cloudfoundry.org/bytefmt v0.1.0
+# code.cloudfoundry.org/bytefmt v0.2.0
 ## explicit; go 1.20
 code.cloudfoundry.org/bytefmt
 # code.cloudfoundry.org/cli v0.0.0-20220215194203-081f8aefeeef
@@ -173,7 +173,7 @@ github.com/vito/go-interact/interact/terminal
 # golang.org/x/crypto v0.26.0
 ## explicit; go 1.20
 golang.org/x/crypto/ssh/terminal
-# golang.org/x/exp v0.0.0-20240808152545-0cdaa3abc0fa
+# golang.org/x/exp v0.0.0-20240823005443-9b4947da3948
 ## explicit; go 1.20
 golang.org/x/exp/constraints
 golang.org/x/exp/slices
@@ -223,12 +223,12 @@ golang.org/x/text/unicode/norm
 ## explicit; go 1.19
 golang.org/x/tools/cover
 golang.org/x/tools/go/ast/inspector
-# google.golang.org/genproto/googleapis/api v0.0.0-20240820151423-278611b39280
+# google.golang.org/genproto/googleapis/api v0.0.0-20240822170219-fc7c04adadcd
 ## explicit; go 1.21
 google.golang.org/genproto/googleapis/api
 google.golang.org/genproto/googleapis/api/annotations
 google.golang.org/genproto/googleapis/api/httpbody
-# google.golang.org/genproto/googleapis/rpc v0.0.0-20240820151423-278611b39280
+# google.golang.org/genproto/googleapis/rpc v0.0.0-20240822170219-fc7c04adadcd
 ## explicit; go 1.21
 google.golang.org/genproto/googleapis/rpc/status
 # google.golang.org/grpc v1.65.0
