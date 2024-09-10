@@ -1,5 +1,5 @@
-# code.cloudfoundry.org/bytefmt v0.8.0
-## explicit; go 1.22
+# code.cloudfoundry.org/bytefmt v0.9.0
+## explicit; go 1.22.0
 code.cloudfoundry.org/bytefmt
 # code.cloudfoundry.org/cli v0.0.0-20220215194203-081f8aefeeef
 ## explicit; go 1.16
@@ -98,7 +98,7 @@ github.com/google/go-cmp/cmp/internal/diff
 github.com/google/go-cmp/cmp/internal/flags
 github.com/google/go-cmp/cmp/internal/function
 github.com/google/go-cmp/cmp/internal/value
-# github.com/google/pprof v0.0.0-20240903155634-a8630aee4ab9
+# github.com/google/pprof v0.0.0-20240910150728-a0b0bb1d4134
 ## explicit; go 1.22
 github.com/google/pprof/profile
 # github.com/google/uuid v1.6.0
@@ -227,7 +227,7 @@ google.golang.org/genproto/googleapis/api/httpbody
 # google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1
 ## explicit; go 1.21
 google.golang.org/genproto/googleapis/rpc/status
-# google.golang.org/grpc v1.66.0
+# google.golang.org/grpc v1.66.1
 ## explicit; go 1.21
 google.golang.org/grpc
 google.golang.org/grpc/attributes
